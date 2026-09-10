@@ -714,6 +714,8 @@ async def list_drive_items(
                                    'script', 'site', 'jam'/'jamboard') or any raw MIME type
                                    string (e.g. 'application/pdf'). Defaults to None (all types).
         detailed (bool): Whether to include size, modified time, description and link in results. Defaults to True.
+                         Descriptions are returned only when resource_type="items";
+                         shared drive listings do not carry them.
         order_by (Optional[str]): Sort order. Comma-separated list of sort keys with optional 'desc' modifier.
                                   Valid keys: 'createdTime', 'folder', 'modifiedByMeTime', 'modifiedTime',
                                   'name', 'name_natural', 'quotaBytesUsed', 'recency', 'sharedWithMeTime',
@@ -728,8 +730,9 @@ async def list_drive_items(
                                    API call per shared drive returned. Defaults to False.
 
     Returns:
-        str: A formatted list of files/folders in the specified folder or shared drives,
-             including each item's description when one is set.
+        str: A formatted list of files/folders in the specified folder or shared drives.
+             When resource_type="items", each entry also carries its description
+             if one is set.
              Includes a nextPageToken line when more results are available.
     """
     logger.info(
